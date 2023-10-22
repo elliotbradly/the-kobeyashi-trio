@@ -20,7 +20,7 @@ import { contextBridge } from 'electron';
 import { dialog } from '@electron/remote';
 
 contextBridge.exposeInMainWorld('electronApi', {
-  openFileDialog: async (title: any, folder: any, filters: any) => {
+  openFileDialog: async (title, folder, filters) => {
     const response = await dialog.showOpenDialog({
       title,
       filters,

@@ -2,7 +2,12 @@
   <q-page class="row items-center justify-evenly">
     <p>Counter: {{ store.counter }}</p>
     <q-btn @click="openElectronFileDialog">Open Electron File Dialog</q-btn>
-    <example-component title="Example component" active :todos="todos" :meta="meta"></example-component>
+    <example-component
+      title="Example component"
+      active
+      :todos="todos"
+      :meta="meta"
+    ></example-component>
   </q-page>
 </template>
 
