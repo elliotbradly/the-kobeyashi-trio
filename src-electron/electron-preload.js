@@ -14,18 +14,16 @@
  *   contextBridge.exposeInMainWorld('myAPI', {
  *     doAThing: () => {}
  *   })
+ *
+ * WARNING!
+ * If accessing Node functionality (like importing @electron/remote) then in your
+ * electron-main.js you will need to set the following when you instantiate BrowserWindow:
+ *
+ * mainWindow = new BrowserWindow({
+ *   // ...
+ *   webPreferences: {
+ *     // ...
+ *     sandbox: false // <-- to be able to import @electron/remote in preload script
+ *   }
+ * }
  */
-import { contextBridge } from 'electron';
-// highlight-next-line
-import { dialog } from '@electron/remote';
-
-contextBridge.exposeInMainWorld('electronApi', {
-  openFileDialog: async (title, folder, filters) => {
-    const response = await dialog.showOpenDialog({
-      title,
-      filters,
-      properties: ['openFile', 'multiSelections'],
-    });
-    return response.filePaths;
-  },
-});
