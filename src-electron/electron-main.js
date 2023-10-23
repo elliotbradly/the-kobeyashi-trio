@@ -3,6 +3,8 @@ import { initialize, enable } from '@electron/remote/main'
 import path from 'path'
 import os from 'os'
 
+//import * as Time from '../001.time'
+
 initialize();
 
 // needed in case process is undefined under Linux
@@ -17,7 +19,7 @@ catch (_) { }
 
 let mainWindow
 
-function createWindow () {
+async function createWindow() {
   /**
    * Initial window options
    */
@@ -32,6 +34,27 @@ function createWindow () {
       preload: path.resolve(__dirname, process.env.QUASAR_ELECTRON_PRELOAD)
     }
   })
+
+  console.log('------------------')
+  console.log('opening.... electron main')
+  console.log('version 0.0.1')
+  console.log('------------------')
+
+  const STORE = require('../001.store/index.js');
+  const ActStr = require('../001.store/00.store.unit/store.action');
+
+  var bit = await STORE.hunt(ActStr.INIT_STORE, { val: 0 });
+  console.log(JSON.stringify(bit))
+
+  var bit = await STORE.hunt(ActStr.WRITE_STORE, { val: 0 });
+  console.log(JSON.stringify(bit))
+
+  var bit = await STORE.hunt(ActStr.READ_STORE, { val: 0 });
+  console.log(JSON.stringify(bit))
+
+
+  //const trmBit = await TERMINAL.hunt(TERMINAL_ACTION.INIT_TERMINAL, { dat: MQTT, src: local });
+  //const strBit = await STORE.hunt(STORE_ACTION.INIT_STORE, { val: 1, dat: MQTT, src: [localBit] });
 
   mainWindow.loadURL(process.env.APP_URL)
 
